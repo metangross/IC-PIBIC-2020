@@ -10,13 +10,13 @@ class PSO(object):
     
     
     def __init__(self, vMax, numPop, cognitivo, social):
-        self.vMax = vMax
-        self.numPop = numPop
-        self.cognitivo = cognitivo
-        self.social = social
+        self.vMax = vMax #VELOCIDADE MAXIMA
+        self.numPop = numPop #NUMERO DE PARTICULAS
+        self.cognitivo = cognitivo #COMPONENTE COGNITIVO
+        self.social = social #COMPONENTE SOCIAL
     
     def inicializaPopulacao(self):
-        self.populacao = [self.Individuo(random()) for i in range(self.numPop)]
+        self.populacao = [self.Individuo(random()) for i in range(self.numPop)] #INICIALIZA OS INDIVIDUOS COM VELOCIDADES ALÉATORIAS
     
     
     def aptidao(self, particula):
@@ -25,26 +25,26 @@ class PSO(object):
     
     
     def execucao(self):
-        self.inicializaPopulacao()
-        vInicial = random()
+        self.inicializaPopulacao() #CRIA E INICIALIZA A POPULAÇÃO
+        vInicial = random() #DEFINE UMA VELOCIDADE INICIAL RANDÔMICA
         for i in self.populacao:
-            i.velocidade = vInicial
-        while True:
+            i.velocidade = vInicial #DEFINE A VELOCIDADE INICIAL DE CADA PARTICULA IGUALMENTE
+        while True: #CONDIÇÃO DE PARADA
             for i in self.populacao:
-                i.valAptidao = self.aptidao(i.pInicial)
-                if i.valAptidao > i.melhorValor:
-                    i.melhorValor = i.valAptidao
-                    i.melhorPosicao = i.posicao
-            melhorParticula = None
-            melhorValor = 0
+                i.valAptidao = self.aptidao(i.pInicial) #CALCULA A APTIDÃO DA PARTICULA
+                if i.valAptidao > i.melhorValor: #VERIFICA SE A APTIDÃO DA PARTICULA É MAIOR QUE O MELHOR DA PARTICULA
+                    i.melhorValor = i.valAptidao #ATUALIZA O MELHOR VALOR DE APTIDÃO
+                    i.melhorPosicao = i.posicao #ATUALIZA A MELHOR POSIÇÃO 
+            melhorParticula = None #VARIAVEL QUE SERÁ ARMAZENADA A MELHOR PARTICULA GLOBAL
+            melhorValor = 0 #MELHOR VALOR DE APTIDÃO
+            for i in self.populacao: 
+                if i.valAptidao > melhorValor: #VERIFICA SE A APTIDÃO DA PARTICULA É MAIOR QUE O MELHOR GLOBAL
+                    melhorValor = i.valAptidao # ARMAZENA O MELHOR VALOR DE APTIDÃO
+                    melhorParticula = i #ARMAZENA A MELHOR PARTICULA
             for i in self.populacao:
-                if i.valAptidao > melhorValor:
-                    melhorValor = i.valAptidao
-                    melhorParticula = i
-            for i in self.populacao:
-                variacao = self.cognitivo*(i.melhorPosicao - (-i.posicao)) + self.social*(melhorParticula.posicao - (-i.posicao))
-                i.velocidade = i.velocidade + variacao
-                i.posicao = i.posicao + i.velocidade
-            #if condicao = alcançada:
-            #   break
+                variacao = self.cognitivo*(i.melhorPosicao - (-i.posicao)) + self.social*(melhorParticula.posicao - (-i.posicao)) #VARIAÇÃO DA VELOCIDADE
+                i.velocidade = i.velocidade + variacao #ATUALIZA A VELOCIDADE DA PARTICULA
+                i.posicao = i.posicao + i.velocidade #ATUALIZA A POSIÇÃO DA PARTICULA
+            if True:#CONDIÇÃO DE PARADA
+                break 
 

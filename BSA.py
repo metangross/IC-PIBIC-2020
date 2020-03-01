@@ -97,7 +97,7 @@ class BSA(object):
                         worst = self.populacao[i].melhorFitness
                         worstIndex = i
                 for i in range(len(self.populacao)):
-                    if i is bestIndex or random() > 0.5:
+                    if i is bestIndex:
                         Gauss = gauss(0, 1)*1
                         for j in range(len(self.populacao[i].posicao)):
                             self.populacao[i].posicao[j] = self.populacao[i].posicao[j] + Gauss*self.populacao[i].posicao[j]
@@ -105,7 +105,7 @@ class BSA(object):
                                 self.populacao[i].posicao[j] = self.limsup[j]
                             if self.liminf is not None and self.populacao[i].posicao[j] < self.liminf[j]:
                                 self.populacao[i].posicao[j] = self.liminf[j]
-                    if i is worstIndex:
+                    elif i is worstIndex or random() > 0.5:
                         Random = random()
                         k = choice(self.populacao)
                         while k is self.populacao[i]:
